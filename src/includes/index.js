@@ -91,7 +91,7 @@ const setup_page = () => {
     console.log("Added click handler for rebuild button");
     console.log("Page initialisation complete");
 
-    showCongratulationsAlert();
+    // showCongratulationsAlert();
 };
 
 
