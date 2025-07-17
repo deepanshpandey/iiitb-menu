@@ -1,12 +1,12 @@
 {
-    "name": "Menu",
-    "short_name": "Menu",
+    "name": "IIITB Menu",
+    "short_name": "IIITB Menu",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#0c0a09",
+    "background_color": "#000000",
     "lang": "en",
     "scope": "/",
-    "theme_color": "#0c0a09",
+    "theme_color": "#000000",
     "icons": [
         {
             "src": "icon-192.png",
