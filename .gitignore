@@ -4,3 +4,4 @@ _site
 menu.json
 .DS_Store
 *.pyc
+.env
