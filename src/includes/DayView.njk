@@ -16,12 +16,16 @@ md:w-1/3 md:snap-start lg:snap-normal {{ 'lg:hidden' if hiddenOnLG }} lg:pl-4 lg
     <div class="mt-16 text-lg font-thin text-stone-200 lg:mt-8 lg:font-normal lg:text-stone-500">
         <span>Menu for:</span>
         <ul class="mt-2">
-
             {% for date in daydata.dates %}
             <li>{{ date }}</li>
             {% endfor %}
-
         </ul>
     </div>
 
+    <footer class="mt-8 text-xs text-center text-stone-400">
+        Made by Deepansh Pandey with 💝
+        <p class="text-xs mt-2">
+            Forked from <a href="https://github.com/zeroby0/iiitb-menu/" target="_blank" class="underline decoration-green-300 font-semibold">zeroby0/iiitb-menu</a>. Huge thanks to him for the source code.
+        </p>
+    </footer>
 </article>
