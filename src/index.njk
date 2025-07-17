@@ -39,116 +39,112 @@
       {% endif %}
       {% include "./includes/AboutPage.njk" %}
     </main>
-
     <!-- Floating Bus Button & Popup -->
     <button id="bus-toggle" class="bus-toggle" aria-label="Toggle Bus Schedule">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M3 9.5a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1H3z"/>
-        <path d="M3 2a1 1 0 0 0-1 1v7.5a3 3 0 0 0 2.5 2.95V13.5a.5.5 0 0 0 1 0v-.05h5v.05a.5.5 0 0 0 1 0v-.05a3 3 0 0 0 2.5-2.95V3a1 1 0 0 0-1-1H3zm0 1h10a.5.5 0 0 1 .5.5V8H2.5V3.5A.5.5 0 0 1 3 3z"/>
+      <path d="M3 9.5a.5.5 0 0 0 0 1h10a.5.5 0 0 0 0-1H3z"/>
+      <path d="M3 2a1 1 0 0 0-1 1v7.5a3 3 0 0 0 2.5 2.95V13.5a.5.5 0 0 0 1 0v-.05h5v.05a.5.5 0 0 0 1 0v-.05a3 3 0 0 0 2.5-2.95V3a1 1 0 0 0-1-1H3zm0 1h10a.5.5 0 0 1 .5.5V8H2.5V3.5A.5.5 0 0 1 3 3z"/>
       </svg>
     </button>
     <div id="bus-popup" class="bus-popup">
       <div class="bus-popup-content">
-        <h1>BUS Schedule</h1>
-        <div class="bus-popup-content">
-        From Uniworld to clg:<br>
-        7.00 am<br>
-        7.30 am<br>
-        8.00 am<br>
-        8.30 am<br>
-        9.00 am<br>
-        9.30 am<br>
-        10.30 am<br>
-        11.30 am<br>
-        12.30 pm<br>
-        1.30 pm<br>
-        2.30 pm<br>
-        3.30 pm<br>
-        4.30 pm<br>
-        5.30 pm<br>
-        6.30 pm<br>
-        7.30 pm<br>
-        9.00 pm<br><br>
+      <h1>BUS Schedule</h1>
+      From Uniworld to clg:<br>
+      7.00 am<br>
+      7.30 am<br>
+      8.00 am<br>
+      8.30 am<br>
+      9.00 am<br>
+      9.30 am<br>
+      10.30 am<br>
+      11.30 am<br>
+      12.30 pm<br>
+      1.30 pm<br>
+      2.30 pm<br>
+      3.30 pm<br>
+      4.30 pm<br>
+      5.30 pm<br>
+      6.30 pm<br>
+      7.30 pm<br>
+      9.00 pm<br><br>
 
-        From clg to Uniworld:<br>
-        12.30 pm<br>
-        1.30 pm<br>
-        2.30 pm<br>
-        4.00 pm<br>
-        5.00 pm<br>
-        6.00pm<br>
-        7.00pm<br>
-        8.00 pm<br>
-        9.30 pm<br>
-        10.30 pm<br>
-        11.30 pm<br>
-        </div>
+      From clg to Uniworld:<br>
+      12.30 pm<br>
+      1.30 pm<br>
+      2.30 pm<br>
+      4.00 pm<br>
+      5.00 pm<br>
+      6.00 pm<br>
+      7.00 pm<br>
+      8.00 pm<br>
+      9.30 pm<br>
+      10.30 pm<br>
+      11.30 pm<br>
       </div>
     </div>
 
     <style>
       /* Floating Button Styles */
       .bus-toggle {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1001;
-        background: #fff;
-        border: none;
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        transition: transform 0.3s;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1001;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+      transition: transform 0.3s;
       }
       .bus-toggle:hover {
-        transform: scale(1.1);
+      transform: scale(1.1);
       }
       /* Popup Styles */
       .bus-popup {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        color: #fff;
-        z-index: 1000;
-        transform: translateY(100%);
-        transition: transform 0.4s ease;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      color: #fff;
+      z-index: 1000;
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
       }
       .bus-popup.visible {
-        transform: translateY(0);
+      transform: translateY(0);
       }
       .bus-popup-content {
-        padding: 20px;
-        white-space: pre-wrap;
-        overflow-y: auto;
-        max-height: 90vh;
+      padding: 20px;
+      max-height: 90vh;
+      overflow-y: auto;
       }
       .bus-popup-content h1 {
-        font-weight: bold;
+      font-weight: bold;
       }
     </style>
     <script>
       (function() {
-        const busToggle = document.getElementById('bus-toggle');
-        const busPopup = document.getElementById('bus-popup');
-        busToggle.addEventListener('click', () => {
-          busPopup.classList.toggle('visible');
-        });
+      const busToggle = document.getElementById('bus-toggle');
+      const busPopup = document.getElementById('bus-popup');
+      busToggle.addEventListener('click', () => {
+        busPopup.classList.toggle('visible');
+      });
       })();
     </script>
     
     <footer class="text-xs font-thin text-center bg-black py-5 text-stone-200">
-        Made by Deepansh Pandey and Ayyan Pasha ✌︎
-        <p class="text-xs mt-2">
-            Forked from <a href="https://github.com/zeroby0/iiitb-menu/" target="_blank" class="underline decoration-green-300 font-semibold">zeroby0/iiitb-menu</a>. Huge thanks to him for the source code.
-        </p>
+      Made by Deepansh Pandey and Ayyan Pasha ✌︎
+      <p class="text-xs mt-2">
+        Forked from <a href="https://github.com/zeroby0/iiitb-menu/" target="_blank" class="underline decoration-green-300 font-semibold">zeroby0/iiitb-menu</a>. Huge thanks to him for the source code.
+      </p>
     </footer>
-  </body>
-</html>
+    </body>
+  </html>
