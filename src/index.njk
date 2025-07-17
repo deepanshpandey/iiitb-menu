@@ -39,6 +39,8 @@
       {% endif %}
       {% include "./includes/AboutPage.njk" %}
     </main>
+
+
     <!-- Floating Bus Button & Popup -->
     <button id="bus-toggle" class="bus-toggle" aria-label="Toggle Bus Schedule">
       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -48,7 +50,7 @@
     </button>
     <div id="bus-popup" class="bus-popup">
       <div class="bus-popup-content">
-      <h1>BUS Schedule</h1>
+      <h1 class="text-2xl font-bold text-left leading-relaxed text-stone-500 mt-8>BUS Schedule</h1>
       From Uniworld to clg:<br>
       7.00 am<br>
       7.30 am<br>
@@ -135,7 +137,29 @@
       const busToggle = document.getElementById('bus-toggle');
       const busPopup = document.getElementById('bus-popup');
       busToggle.addEventListener('click', () => {
-        busPopup.classList.toggle('visible');
+      busPopup.classList.toggle('visible');
+      });
+
+      // Swipe down to dismiss functionality
+      let startY = 0;
+      let currentY = 0;
+      const threshold = 100; // Minimum swipe distance in pixels to trigger dismiss
+
+      busPopup.addEventListener('touchstart', (e) => {
+      startY = e.touches[0].clientY;
+      });
+
+      busPopup.addEventListener('touchmove', (e) => {
+      currentY = e.touches[0].clientY;
+      });
+
+      busPopup.addEventListener('touchend', () => {
+      if (currentY - startY > threshold) {
+        busPopup.classList.remove('visible');
+      }
+      // Reset start and current values
+      startY = 0;
+      currentY = 0;
       });
       })();
     </script>
@@ -143,7 +167,7 @@
     <footer class="text-xs font-thin text-center bg-black py-5 text-stone-200">
       Made by Deepansh Pandey and Ayyan Pasha ✌︎
       <p class="text-xs mt-2">
-        Forked from <a href="https://github.com/zeroby0/iiitb-menu/" target="_blank" class="underline decoration-green-300 font-semibold">zeroby0/iiitb-menu</a>. Huge thanks to him for the source code.
+      Forked from <a href="https://github.com/zeroby0/iiitb-menu/" target="_blank" class="underline decoration-green-300 font-semibold">zeroby0/iiitb-menu</a>. Huge thanks to him for the source code.
       </p>
     </footer>
     </body>
