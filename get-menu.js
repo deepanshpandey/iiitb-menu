@@ -1,11 +1,7 @@
 const fs = require('fs');
 const { chromium } = require('playwright');
 
-const url_login = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommittee_iiitb_ac_in/Documents/IIITB-Menu.xlsx?d=w9345dc2a600f4e5a824d9510f774cddf&csf=1&web=1&e=cMYLbj';
-const url_download = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/foodcommittee_iiitb_ac_in/Documents/IIITB-Menu.xlsx';
-
-const username = process.env.MS_USERNAME;
-const password = process.env.MS_PASSWORD;
+const url_download = 'https://iiitbac-my.sharepoint.com/:x:/r/personal/deepansh_pandey_iiitb_ac_in/Documents/IIITB-Menu.xlsx';
 
 const MAX_RETRIES = 5;
 const TIMEOUT = 30000; // 30 seconds
@@ -25,36 +21,6 @@ async function downloadFile(retryCount = 0) {
     
     const page = await context.newPage();
     console.log("Started attempt:", retryCount + 1);
-
-    await page.goto(url_login, {
-      waitUntil: 'networkidle',
-      timeout: NAVIGATION_TIMEOUT
-    });
-    console.log("Opened Login Page");
-
-    const usernameSelector = 'input[name="loginfmt"]';
-    await page.waitForSelector(usernameSelector, { 
-      state: 'visible',
-      timeout: TIMEOUT
-    });
-    
-    await page.fill(usernameSelector, username);
-    await page.click('#idSIButton9');
-    console.log("Entered Username");
-
-    await page.waitForSelector('#i0118', { 
-      state: 'visible',
-      timeout: TIMEOUT
-    });
-    await page.fill('#i0118', password);
-    await page.click('#idSIButton9');
-    console.log("Entered Password");
-
-    await page.waitForSelector('input[name="DontShowAgain"]', {
-      timeout: TIMEOUT
-    });
-    await page.click('input[type="button"]');
-    console.log("Selected Don't remember");
 
     console.log("Starting Download");
     const downloadPromise = page.waitForEvent('download', {
