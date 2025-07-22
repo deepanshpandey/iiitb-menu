@@ -7,7 +7,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IIITB Menu</title>
     <style>
-        {% cssconcat %}
+      {% cssconcat %}
+      
+      /* Floating Button Styles */
+      .bus-toggle {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1001;
+        background: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        transition: transform 0.3s;
+      }
+      .bus-toggle:hover {
+        transform: scale(1.1);
+      }
+      
+      /* Popup Styles */
+      .bus-popup {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        color: #fff;
+        z-index: 1000;
+        transform: translateY(100%);
+        transition: transform 0.4s ease;
+      }
+      .bus-popup.visible {
+        transform: translateY(0);
+      }
+      .bus-popup-content {
+        padding: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+      .bus-popup-content h1 {
+        font-weight: bold;
+      }
+      
+      /* Loader Animation Styles */
+      #refresh-loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+      }
+      .spinner {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #3498db;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
     </style>
     <script>{% include "./includes/index.js" %}</script>
     <script async src="https://analytics.umami.is/script.js" data-website-id="011dc300-52eb-4333-9a27-c883acbb639a"></script>
@@ -49,176 +122,138 @@
     </button>
     <div id="bus-popup" class="bus-popup">
       <div class="bus-popup-content">
-      <h1 class="text-2xl font-bold text-left leading-relaxed text-stone-400 mt-8">BUS Schedule</h1>
-      
-      <h2 class="text-xl font-bold text-left leading-relaxed text-stone-500 mt-8">From Uniworld to clg:</h2>
-      <ul class="text-base mt-4">
-      <li>7.00 am</li>
-      <li>7.30 am</li>
-      <li>8.00 am</li>
-      <li>8.30 am</li>
-      <li>9.00 am</li>
-      <li>9.30 am</li>
-      <li>10.30 am</li>
-      <li>11.30 am</li>
-      <li>12.30 pm</li>
-      <li>1.30 pm</li>
-      <li>2.30 pm</li>
-      <li>3.30 pm</li>
-      <li>4.30 pm</li>
-      <li>5.30 pm</li>
-      <li>6.30 pm</li>
-      <li>7.30 pm</li>
-      <li>9.00 pm</li>
-      </ul>
+        <h1 class="text-2xl font-bold text-left leading-relaxed text-stone-400 mt-8">BUS Schedule</h1>
+        
+        <h2 class="text-xl font-bold text-left leading-relaxed text-stone-500 mt-8">From Uniworld to clg:</h2>
+        <ul class="text-base mt-4">
+          <li>7.00 am</li>
+          <li>7.30 am</li>
+          <li>8.00 am</li>
+          <li>8.30 am</li>
+          <li>9.00 am</li>
+          <li>9.30 am</li>
+          <li>10.30 am</li>
+          <li>11.30 am</li>
+          <li>12.30 pm</li>
+          <li>1.30 pm</li>
+          <li>2.30 pm</li>
+          <li>3.30 pm</li>
+          <li>4.30 pm</li>
+          <li>5.30 pm</li>
+          <li>6.30 pm</li>
+          <li>7.30 pm</li>
+          <li>9.00 pm</li>
+        </ul>
 
-      <h2 class="text-xl font-bold text-left leading-relaxed text-stone-500 mt-8">From clg to Uniworld:</h2>
-      <ul class="text-base mt-4">
-      <li>12.30 pm</li>
-      <li>1.30 pm</li>
-      <li>2.30 pm</li>
-      <li>4.00 pm</li>
-      <li>5.00 pm</li>
-      <li>6.00 pm</li>
-      <li>7.00 pm</li>
-      <li>8.00 pm</li>
-      <li>9.30 pm</li>
-      <li>10.30 pm</li>
-      <li>11.30 pm</li>
-      </ul>
+        <h2 class="text-xl font-bold text-left leading-relaxed text-stone-500 mt-8">From clg to Uniworld:</h2>
+        <ul class="text-base mt-4">
+          <li>12.30 pm</li>
+          <li>1.30 pm</li>
+          <li>2.30 pm</li>
+          <li>4.00 pm</li>
+          <li>5.00 pm</li>
+          <li>6.00 pm</li>
+          <li>7.00 pm</li>
+          <li>8.00 pm</li>
+          <li>9.30 pm</li>
+          <li>10.30 pm</li>
+          <li>11.30 pm</li>
+        </ul>
       </div>
     </div>
 
-    <style>
-      /* Floating Button Styles */
-      .bus-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1001;
-      background: #fff;
-      border: none;
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-      transition: transform 0.3s;
-      }
-      .bus-toggle:hover {
-      transform: scale(1.1);
-      }
-      /* Popup Styles */
-      .bus-popup {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000;
-      color: #fff;
-      z-index: 1000;
-      transform: translateY(100%);
-      transition: transform 0.4s ease;
-      }
-      .bus-popup.visible {
-      transform: translateY(0);
-      }
-      .bus-popup-content {
-      padding: 20px;
-      max-height: 90vh;
-      overflow-y: auto;
-      }
-      .bus-popup-content h1 {
-      font-weight: bold;
-      }
-    </style>
+    <!-- Loader Animation for Pull Down Refresh -->
+    <div id="refresh-loader">
+      <div class="spinner"></div>
+    </div>
+
     <script>
       (function() {
-      // Bus Popup Gesture and Toggle
-      const busToggle = document.getElementById('bus-toggle');
-      const busPopup = document.getElementById('bus-popup');
-      const busPopupContent = document.querySelector('.bus-popup-content');
+        // Bus Popup Gesture and Toggle
+        const busToggle = document.getElementById('bus-toggle');
+        const busPopup = document.getElementById('bus-popup');
+        const busPopupContent = document.querySelector('.bus-popup-content');
 
-      let startY = 0;
-      let currentY = 0;
-      const threshold = 100; // Minimum swipe distance in pixels to trigger dismiss
-      let isDismissing = false;
+        let startY = 0;
+        let currentY = 0;
+        const threshold = 100; // Minimum swipe distance in pixels to trigger dismiss
+        let isDismissing = false;
 
-      busToggle.addEventListener('click', () => {
-        busPopup.classList.toggle('visible');
-      });
+        busToggle.addEventListener('click', () => {
+          busPopup.classList.toggle('visible');
+        });
 
-      busPopup.addEventListener('touchstart', (e) => {
-        // Only start dismiss gesture if the popup content is scrolled to the top
-        if (busPopupContent.scrollTop === 0) {
-          startY = e.touches[0].clientY;
-          isDismissing = true;
-        } else {
+        busPopup.addEventListener('touchstart', (e) => {
+          // Only start dismiss gesture if the popup content is scrolled to the top
+          if (busPopupContent.scrollTop === 0) {
+            startY = e.touches[0].clientY;
+            isDismissing = true;
+          } else {
+            isDismissing = false;
+          }
+        }, { passive: true });
+
+        busPopup.addEventListener('touchmove', (e) => {
+          if (!isDismissing) return;
+          currentY = e.touches[0].clientY;
+          if (currentY - startY > 10) {
+            // prevent default to avoid conflict with pull-to-refresh
+            e.preventDefault();
+          }
+        }, { passive: false });
+
+        busPopup.addEventListener('touchend', () => {
+          if (isDismissing && (currentY - startY > threshold)) {
+            busPopup.classList.remove('visible');
+          }
+          startY = 0;
+          currentY = 0;
           isDismissing = false;
-        }
-      }, { passive: true });
+        });
 
-      busPopup.addEventListener('touchmove', (e) => {
-        if (!isDismissing) return;
-        currentY = e.touches[0].clientY;
-        if (currentY - startY > 10) {
-          // prevent default to avoid conflict with pull-to-refresh
-          e.preventDefault();
-        }
-      }, { passive: false });
+        // Pull Down Refresh Gesture on Main Page with Loader Animation
+        const mainContent = document.querySelector('main');
+        let refreshStartY = 0;
+        let refreshCurrentY = 0;
+        const refreshThreshold = 100; // pixels
+        let isRefreshingGesture = false;
+        const refreshLoader = document.getElementById('refresh-loader');
 
-      busPopup.addEventListener('touchend', () => {
-        if (isDismissing && (currentY - startY > threshold)) {
-          busPopup.classList.remove('visible');
-        }
-        startY = 0;
-        currentY = 0;
-        isDismissing = false;
-      });
+        document.addEventListener('touchstart', (e) => {
+          // Only trigger when bus popup is closed and page is scrolled to top.
+          if (busPopup.classList.contains('visible')) return;
+          if (window.scrollY > 0) return;
+          refreshStartY = e.touches[0].clientY;
+          isRefreshingGesture = true;
+        }, { passive: false });
 
-      // Pull Down Refresh Gesture on Main Page
-      const mainContent = document.querySelector('main');
-      let refreshStartY = 0;
-      let refreshCurrentY = 0;
-      const refreshThreshold = 100; // pixels
-      let isRefreshingGesture = false;
+        document.addEventListener('touchmove', (e) => {
+          if (!isRefreshingGesture) return;
+          refreshCurrentY = e.touches[0].clientY;
+          // Prevent browser pull-to-refresh when a downward pull is detected.
+          if (refreshCurrentY - refreshStartY > 0) {
+            e.preventDefault();
+          }
+        }, { passive: false });
 
-      document.addEventListener('touchstart', (e) => {
-        // Only trigger when bus popup is closed and page is scrolled to top.
-        if (busPopup.classList.contains('visible')) return;
-        if (window.scrollY > 0) return;
-        refreshStartY = e.touches[0].clientY;
-        isRefreshingGesture = true;
-      }, { passive: false });
-
-      document.addEventListener('touchmove', (e) => {
-        if (!isRefreshingGesture) return;
-        refreshCurrentY = e.touches[0].clientY;
-        // Prevent browser pull-to-refresh when a downward pull is detected.
-        if (refreshCurrentY - refreshStartY > 0) {
-          e.preventDefault();
-        }
-      }, { passive: false });
-
-      document.addEventListener('touchend', () => {
-        if (isRefreshingGesture && (refreshCurrentY - refreshStartY > refreshThreshold)) {
-          // Trigger refresh action. Here we reload the page.
-          location.reload();
-        }
-        isRefreshingGesture = false;
-        refreshStartY = 0;
-        refreshCurrentY = 0;
-      });
+        document.addEventListener('touchend', () => {
+          if (isRefreshingGesture && (refreshCurrentY - refreshStartY > refreshThreshold)) {
+            // Show the loader animation then reload
+            refreshLoader.style.display = "flex";
+            setTimeout(() => {
+              location.reload();
+            }, 500);
+          }
+          isRefreshingGesture = false;
+          refreshStartY = 0;
+          refreshCurrentY = 0;
+        });
       })();
     </script>
     <footer class="text-xs font-thin text-center bg-black py-5 text-stone-200">
       Made by Deepansh Pandey and Ayyan Pasha ✌︎
       <p class="text-xs mt-2">
-      Forked from <a href="https://github.com/zeroby0/iiitb-menu/" target="_blank" class="underline decoration-green-300 font-semibold">zeroby0/iiitb-menu</a>. Huge thanks to him for the source code.
+        Forked from <a href="https://github.com/zeroby0/iiitb-menu/" target="_blank" class="underline decoration-green-300 font-semibold">zeroby0/iiitb-menu</a>. Huge thanks to him for the source code.
       </p>
     </footer>
   </body>
