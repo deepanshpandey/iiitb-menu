@@ -15,7 +15,7 @@
   </head>
   <body>
 
-    <main id="main-content" class="lg:w-screen text-stone-300 bg-black leading-normal flex flex-row overflow-x-scroll snap-x scroll-smooth snap-mandatory md:snap-none lg:max-w-screen">
+    <main class="lg:w-screen text-stone-300 bg-black leading-normal flex flex-row overflow-x-scroll snap-x scroll-smooth snap-mandatory md:snap-none lg:max-w-screen">
       {% if menu is defined %}
         {% set idPrefix = 'pre-' %}
         {% set hiddenOnLG = true %}
@@ -181,7 +181,7 @@
       });
 
       // Pull Down Refresh Gesture on Main Page
-      const mainContent = document.getElementById('main-content');
+      const mainContent = document.querySelector('main');
       let refreshStartY = 0;
       let refreshCurrentY = 0;
       const refreshThreshold = 100; // pixels
