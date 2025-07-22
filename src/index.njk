@@ -150,7 +150,8 @@
       const threshold = 100; // Minimum swipe distance in pixels to trigger dismiss
 
       busPopup.addEventListener('touchstart', (e) => {
-        startY = e.touches[0].clientY;
+        if(startY == 0)
+          startY = e.touches[0].clientY;
       }, { passive: true });
 
       busPopup.addEventListener('touchmove', (e) => {
