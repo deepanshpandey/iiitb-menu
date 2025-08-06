@@ -265,32 +265,6 @@
           bottomStartY = 0;
           bottomCurrentY = 0;
         });
-
-        // Modified Bottom Scroll Gesture for Desktop:
-        // When scroll events occur near the bottom of the page, accumulate the delta
-        // and trigger the bus popup if the total exceeds a threshold.
-        let bottomScrollDelta = 0,
-            bottomScrollThreshold = 100,
-            bottomScrollTimeout;
-
-        window.addEventListener('wheel', function(e) {
-          const nearBottom = (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5);
-          if (e.deltaY > 0 && nearBottom) {
-            bottomScrollDelta += e.deltaY;
-            if (bottomScrollDelta >= bottomScrollThreshold) {
-              if (!busPopup.classList.contains('visible')) {
-                busPopup.classList.add('visible');
-              }
-              bottomScrollDelta = 0;
-            }
-            clearTimeout(bottomScrollTimeout);
-            bottomScrollTimeout = setTimeout(() => {
-              bottomScrollDelta = 0;
-            }, 500);
-          } else {
-            bottomScrollDelta = 0;
-          }
-        });
       })();
     </script>
     <footer class="text-xs font-thin text-center bg-black py-5 text-stone-200">
