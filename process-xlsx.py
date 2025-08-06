@@ -35,9 +35,6 @@ def process_meal_data(series):
         # Clean the item string
         item = item.strip()
 
-        item = re.sub('Pakwaan', 'Bakvaas', item)
-        item = re.sub('Pakwan', 'Bakvaas', item)
-
         
         # Check if this is a meal category
         if item in meal_categories:
