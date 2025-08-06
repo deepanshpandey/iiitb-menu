@@ -8,7 +8,6 @@
     <title>IIITB Menu</title>
     <style>
       {% cssconcat %}
-      
       /* Floating Button Styles */
       .bus-toggle {
         position: fixed;
@@ -172,22 +171,18 @@
 
     <script>
       (function() {
-        // Bus Popup Gesture and Toggle
+        // Bus Popup Toggle
         const busToggle = document.getElementById('bus-toggle');
         const busPopup = document.getElementById('bus-popup');
         const busPopupContent = document.querySelector('.bus-popup-content');
-
-        let startY = 0;
-        let currentY = 0;
-        const threshold = 100; // Swipe distance in pixels to trigger dismiss
-        let isDismissing = false;
 
         busToggle.addEventListener('click', () => {
           busPopup.classList.toggle('visible');
         });
 
+        // Dismiss Popup by swiping down on its content when scrolled to top
+        let startY = 0, currentY = 0, threshold = 100, isDismissing = false;
         busPopup.addEventListener('touchstart', (e) => {
-          // Only start dismiss gesture if popup content scrolled to top
           if (busPopupContent.scrollTop === 0) {
             startY = e.touches[0].clientY;
             isDismissing = true;
@@ -200,7 +195,6 @@
           if (!isDismissing) return;
           currentY = e.touches[0].clientY;
           if (currentY - startY > 10) {
-            // prevent default to avoid conflict with pull-to-refresh
             e.preventDefault();
           }
         }, { passive: false });
@@ -216,14 +210,10 @@
 
         // Pull Down Refresh Gesture on Main Page with Loader Animation
         const mainContent = document.querySelector('main');
-        let refreshStartY = 0;
-        let refreshCurrentY = 0;
-        const refreshThreshold = 100; // pixels
-        let isRefreshingGesture = false;
+        let refreshStartY = 0, refreshCurrentY = 0, refreshThreshold = 100, isRefreshingGesture = false;
         const refreshLoader = document.getElementById('refresh-loader');
 
         document.addEventListener('touchstart', (e) => {
-          // Only trigger when popup is closed and page is scrolled to top.
           if (busPopup.classList.contains('visible')) return;
           if (window.scrollY > 0) return;
           refreshStartY = e.touches[0].clientY;
@@ -250,26 +240,41 @@
           refreshCurrentY = 0;
         });
 
-        // Bottom Scroll Gesture: Desktop (wheel event)
+        // Modified Bottom Scroll Gesture for Desktop using wheel event:
+        // First wheel event scrolls to the bottom.
+        // A subsequent wheel event while at the bottom then opens the bus menu.
+        let bottomScrollInitiated = false;
+        let wheelTimeout;
+
         window.addEventListener('wheel', function(e) {
-          // Check if scrolling down
           if (e.deltaY > 0) {
             const scrolledToBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
-            if (scrolledToBottom && !busPopup.classList.contains('visible')) {
-              busPopup.classList.add('visible');
+            if (scrolledToBottom) {
+              if (!bottomScrollInitiated) {
+                // First bottom scroll reached; set flag and wait for another scroll event.
+                bottomScrollInitiated = true;
+              } else {
+                // Second bottom scroll; open the bus popup if not already visible.
+                if (!busPopup.classList.contains('visible')) {
+                  busPopup.classList.add('visible');
+                }
+              }
+            } else {
+              // Reset the flag if not scrolled to bottom.
+              bottomScrollInitiated = false;
             }
           }
+          clearTimeout(wheelTimeout);
+          wheelTimeout = setTimeout(() => {
+            bottomScrollInitiated = false;
+          }, 500);
         });
 
-        // Bottom Swipe Gesture: Mobile (touch events)
-        let bottomStartY = 0;
-        let bottomCurrentY = 0;
-        const bottomThreshold = 100; // pixels
-        let isBottomGesture = false;
-
+        // Bottom Swipe Gesture for Mobile:
+        // Trigger if touch starts near bottom of viewport (e.g., within 50px)
+        let bottomStartY = 0, bottomCurrentY = 0, bottomThreshold = 100, isBottomGesture = false;
         document.addEventListener('touchstart', (e) => {
-          // Only trigger if already at bottom
-          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight) {
+          if (e.touches[0].clientY > window.innerHeight - 50) {
             bottomStartY = e.touches[0].clientY;
             isBottomGesture = true;
           }
