@@ -240,36 +240,6 @@
           refreshCurrentY = 0;
         });
 
-        // Modified Bottom Scroll Gesture for Desktop using wheel event:
-        // First wheel event scrolls to the bottom.
-        // A subsequent wheel event while at the bottom then opens the bus menu.
-        let bottomScrollInitiated = false;
-        let wheelTimeout;
-
-        window.addEventListener('wheel', function(e) {
-          if (e.deltaY > 0) {
-            const scrolledToBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight;
-            if (scrolledToBottom) {
-              if (!bottomScrollInitiated) {
-                // First bottom scroll reached; set flag and wait for another scroll event.
-                bottomScrollInitiated = true;
-              } else {
-                // Second bottom scroll; open the bus popup if not already visible.
-                if (!busPopup.classList.contains('visible')) {
-                  busPopup.classList.add('visible');
-                }
-              }
-            } else {
-              // Reset the flag if not scrolled to bottom.
-              bottomScrollInitiated = false;
-            }
-          }
-          clearTimeout(wheelTimeout);
-          wheelTimeout = setTimeout(() => {
-            bottomScrollInitiated = false;
-          }, 500);
-        });
-
         // Bottom Swipe Gesture for Mobile:
         // Trigger if touch starts near bottom of viewport (e.g., within 50px)
         let bottomStartY = 0, bottomCurrentY = 0, bottomThreshold = 100, isBottomGesture = false;
@@ -294,6 +264,32 @@
           isBottomGesture = false;
           bottomStartY = 0;
           bottomCurrentY = 0;
+        });
+
+        // Modified Bottom Scroll Gesture for Desktop:
+        // When scroll events occur near the bottom of the page, accumulate the delta
+        // and trigger the bus popup if the total exceeds a threshold.
+        let bottomScrollDelta = 0,
+            bottomScrollThreshold = 100,
+            bottomScrollTimeout;
+
+        window.addEventListener('wheel', function(e) {
+          const nearBottom = (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 5);
+          if (e.deltaY > 0 && nearBottom) {
+            bottomScrollDelta += e.deltaY;
+            if (bottomScrollDelta >= bottomScrollThreshold) {
+              if (!busPopup.classList.contains('visible')) {
+                busPopup.classList.add('visible');
+              }
+              bottomScrollDelta = 0;
+            }
+            clearTimeout(bottomScrollTimeout);
+            bottomScrollTimeout = setTimeout(() => {
+              bottomScrollDelta = 0;
+            }, 500);
+          } else {
+            bottomScrollDelta = 0;
+          }
         });
       })();
     </script>
